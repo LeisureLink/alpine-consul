@@ -20,6 +20,10 @@ ERROR: Unable to discover the consul cluster; tried CONSUL_SERVICE_NAME=consul.s
        or the name of a linked consul container in CONSUL_HOST_NAME.
 ```
 
+## Automated Builds
+
+Builds are automatically published via [dockerhub](https://hub.docker.com/r/leisurelink/alpine-consul/).
+
 ## Tags (Asset Versions)
 
 * **1.0.0** (Alpine 3.2, S6 Overlay v1.17.1.1, Consul v0.6.3)
