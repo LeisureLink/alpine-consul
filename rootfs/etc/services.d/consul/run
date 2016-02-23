@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv sh
+
+# Find consul; it should have a consul.service.consul SRV record in DNS...
+CONSUL_SERVICE_NAME=${CONSUL_SERVICE_NAME:-consul.service.consul}
+# Alternative to finding via DNS: use a --link option in the docker run command...
+CONSUL_HOST_NAME=${CONSUL_HOST_NAME:-consul-agent}
+
+JOIN=$(disco $CONSUL_SERVICE_NAME)
+
+# If there isn't a consul service, look it up by external (LAN) IP (requires --link)
+[ -z $JOIN ] && \
+  JOIN=`getent hosts $CONSUL_HOST_NAME | awk '{print $1}'`
+
+[ -z $JOIN ] && \
+  printf 'ERROR: Unable to discover the consul cluster; tried CONSUL_SERVICE_NAME=%s and CONSUL_HOST_NAME=%s.\n       Either specify DNS service name in CONSUL_SERVICE_NAME,\n       or the name of a linked consul container in CONSUL_HOST_NAME.\n' $CONSUL_SERVICE_NAME $CONSUL_HOST_NAME >&2 && \
+  exit 1
+
+printf 'Joining Consul cluster via %s (%s)\n' $CONSUL_SERVICE_NAME $JOIN
+
+export GOMAXPROCS=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 2)
+exec s6-setuidgid consul consul agent -config-dir /etc/consul.d -retry-join ${JOIN} -retry-interval 15s;
