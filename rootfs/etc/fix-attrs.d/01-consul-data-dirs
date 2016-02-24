@@ -1,3 +1,0 @@
-/etc/consul.d true consul 0644 2700
-/var/data/consul true consul 0644 2700
-/etc/pki/consul true consul 0440 2700

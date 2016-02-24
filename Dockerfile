@@ -10,20 +10,21 @@ ENV CONSUL_VERSION=0.6.3 \
 COPY rootfs /
 
 ADD https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip /tmp/consul.zip
+ADD https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_web_ui.zip /tmp/consul_web_ui.zip
 ADD https://circle-artifacts.com/gh/andyshinn/alpine-pkg-glibc/6/artifacts/0/home/ubuntu/alpine-pkg-glibc/packages/x86_64/glibc-${GLIBC_VERSION}.apk /tmp/glibc-${GLIBC_VERSION}.apk
 
 RUN set -ex && \
     apk --update add drill curl ca-certificates && \
     apk add --allow-untrusted /tmp/glibc-${GLIBC_VERSION}.apk && \
     cd /tmp && \
-    mkdir -p /etc/pki/consul && \
-    mkdir -p /opt/consul/bin && \
+    mkdir -p /etc/pki/consul \
+             /opt/consul/bin \
+             /opt/consul/ui \
+             /var/data/consul && \
     unzip -d /opt/consul/bin /tmp/consul.zip && \
     ln -s /opt/consul/bin/consul /usr/local/bin/consul && \
-    addgroup consul && \
-    adduser -D -G consul consul && \
+    unzip -d /opt/consul/ui consul_web_ui.zip && \
     mkdir -p /var/data/consul && \
-    chown -R consul:consul /var/data/consul && \
     chmod +x /opt/disco/disco.sh && \
     ln -s /opt/disco/disco.sh /usr/local/bin/disco && \
     rm -rf /tmp/* \
