@@ -18,4 +18,4 @@ JOIN=$(disco $CONSUL_SERVICE_NAME)
 printf 'Joining Consul cluster via %s (%s)\n' $CONSUL_SERVICE_NAME $JOIN
 
 export GOMAXPROCS=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 2)
-exec s6-setuidgid consul consul agent -config-dir /etc/consul.d -retry-join ${JOIN} -retry-interval 15s;
+exec consul agent -config-dir /etc/consul.d -retry-join ${JOIN} -retry-interval 15s;
