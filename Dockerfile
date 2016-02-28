@@ -18,13 +18,12 @@ RUN set -ex && \
     apk add --allow-untrusted /tmp/glibc-${GLIBC_VERSION}.apk && \
     cd /tmp && \
     mkdir -p /etc/pki/consul \
+             /var/data/consul \
              /opt/consul/bin \
-             /opt/consul/ui \
-             /var/data/consul && \
+             /ui && \
     unzip -d /opt/consul/bin /tmp/consul.zip && \
     ln -s /opt/consul/bin/consul /usr/local/bin/consul && \
-    unzip -d /opt/consul/ui consul_web_ui.zip && \
-    mkdir -p /var/data/consul && \
+    unzip -d /ui consul_web_ui.zip && \
     chmod +x /opt/disco/disco.sh && \
     ln -s /opt/disco/disco.sh /usr/local/bin/disco && \
     rm -rf /tmp/* \
