@@ -1,9 +1,9 @@
-FROM leisurelink/alpine-base
+FROM leisurelink/alpine-base:1.0.2
 MAINTAINER LeisureLink Tech <techteam@leisurelink.com>
 
 # SERVICE_IGNORE is defined in case we're running alongside gliderlabs/registrator; we register ourselves.
 
-ENV CONSUL_VERSION=0.6.3 \
+ENV CONSUL_VERSION=0.6.4 \
     GLIBC_VERSION=2.21-r2 \
     SERVICE_IGNORE=1
 

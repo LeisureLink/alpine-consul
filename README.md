@@ -27,6 +27,7 @@ Builds are automatically published via [dockerhub](https://hub.docker.com/r/leis
 ## Tags (Asset Versions)
 
 * **1.0.0** (Alpine 3.2, S6 Overlay v1.17.1.1, Consul v0.6.3)
+* **1.0.1** (Alpine 3.3, S6 Overlay v1.17.2.0, Consul v0.6.4)
 
 ## License
 
